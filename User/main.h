@@ -7,6 +7,9 @@
 #define SINE_SIGNAL_FREQUENCY     10000
 #define ORTHOGONAL_PWM_FREQUENCY  40000
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
 typedef enum {
   PGA_GAIN_1 = 0,
   PGA_GAIN_2,
@@ -23,6 +26,13 @@ typedef enum {
   PGA_TARGET_V
 } PGA_Target;
 
+typedef enum {
+  RSEL_VALUE_120R = 0,
+  RSEL_VALUE_1K,
+  RSEL_VALUE_10K,
+  RSEL_VALUE_100K
+} RSEL_Value;
+
 extern GPIO_InitTypeDef gpioInit;
 extern TIM_TimeBaseInitTypeDef timTimeBaseInit;
 extern TIM_OCInitTypeDef timOCInit;
@@ -37,6 +47,8 @@ extern ADC_InitTypeDef adcInit;
 extern ADC_CommonInitTypeDef adcCommonInit;
 
 void Delay(uint32_t millis);
+void InitLED();
+void InitButton();
 void InitDACSineSignal();
 void InitOrthogonalPWMSignal();
 void InitSPIForOLED();
@@ -46,7 +58,7 @@ void InitADCSampler();
 
 void PGA_SetGain(PGA_Target target, PGA_Gain gain);
 
-void ADC_RequestData(int16_t **ival, int16_t **vval, int *size);
+void ADC_RequestData(RSEL_Value rsel, PGA_Gain igain, PGA_Gain vgain, int16_t *idata, int16_t *vdata, int size);
 
 #endif /* __MAIN_H */
 

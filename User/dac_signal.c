@@ -1,7 +1,7 @@
 #include "main.h"
 #include <math.h>
 
-#define SINE_TABLE_SIZE           144
+#define SINE_TABLE_SIZE 72
 
 uint16_t Sine12bit[SINE_TABLE_SIZE];
 
@@ -31,7 +31,7 @@ void InitDACSineSignal() {
   TIM_TimeBaseStructInit(&timTimeBaseInit);
   timTimeBaseInit.TIM_Period = SystemCoreClock / SINE_SIGNAL_FREQUENCY / SINE_TABLE_SIZE - 1;
   timTimeBaseInit.TIM_Prescaler = 0;
-  timTimeBaseInit.TIM_ClockDivision = 0x0;
+  timTimeBaseInit.TIM_ClockDivision = TIM_CKD_DIV1;
   timTimeBaseInit.TIM_CounterMode = TIM_CounterMode_Up;
   TIM_TimeBaseInit(TIM2, &timTimeBaseInit);
   TIM_SelectOutputTrigger(TIM2, TIM_TRGOSource_Update);
